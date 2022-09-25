@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create users table
+      author: Aleksey Hajialiyev
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: id
+                  type: varchar(100)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+              - column:
+                  name: phone
+                  type: varchar(100)
+            schemaName: phonebook_db
+            tableName: users
+
+  - changeSet:
+      id: Insert data
+      author: Aleksey Hajialiyev
+      changes:
+        - sql:
+            sql: insert into users (id, name, phone) values ("90ea9391-6765-4b8c-91e1-6003853235d5", "Alex", "4579856")
+        - sql:
+            sql: insert into users (id, name, phone) values ("eadd3f8f-4193-488a-aac3-5df06456153e", "Stiven", "4578866")
+        - sql:
+            sql: insert into users (id, name, phone) values ("515009bf-e705-4b5a-a354-0aae7b395954", "John", "4578899")
+

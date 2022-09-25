@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -21,8 +22,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResp save(UserReq request) {
+        UserEntity user = new UserEntity();
+        user.setUserId(UUID.randomUUID().toString());
+        user.setName(request.getName());
+        user.setPhoneNumber(request.getPhone());
         try {
-            var saved = ur.save(mapper.mapRequestToUserEntity(request));
+            var saved = ur.save(user);
             return UserResp.success(saved.getUserId(), Operation.ADD.name());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -32,16 +37,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResp edit(String userId, UserReq request) {
-        return null;
+        try {
+            var userEntity = ur.findById(userId).orElseThrow();
+            userEntity.setName(request.getName());
+            userEntity.setPhoneNumber(request.getPhone());
+            var saved = ur.save(userEntity);
+            return UserResp.success(saved.getUserId(), Operation.UPDATE.name());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return UserResp.failure(userId,  Operation.UPDATE.name());
+        }
     }
 
     @Override
     public UserResp delete(String userId) {
-        return null;
-    }
+        try {
+            ur.deleteById(userId);
+            return UserResp.success(userId, Operation.REMOVE.name());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return UserResp.failure(userId, Operation.REMOVE.name());
+        }    }
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return null;
+        System.out.println(ur.findAll());
+        return this.ur.findAll();
     }
 }

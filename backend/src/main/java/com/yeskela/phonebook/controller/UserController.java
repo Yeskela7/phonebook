@@ -7,6 +7,7 @@ import com.yeskela.phonebook.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("user")
 @RestController
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -32,19 +34,16 @@ public class UserController {
         return userService.save(request);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping("edit/{userId}")
     public UserResp editUser(@PathVariable String userId, @RequestBody UserReq request) {
         return userService.edit(userId, request);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("delete/{userId}")
     public UserResp deleteUser(@PathVariable String userId) {
         return userService.delete(userId);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("list")
     public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
