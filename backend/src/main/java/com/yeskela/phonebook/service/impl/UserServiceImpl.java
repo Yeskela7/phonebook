@@ -57,11 +57,11 @@ public class UserServiceImpl implements UserService {
         } catch (Exception ex) {
             ex.printStackTrace();
             return UserResp.failure(userId, Operation.REMOVE.name());
-        }    }
+        }
+    }
 
     @Override
     public List<UserEntity> getAllUsers() {
-        System.out.println(ur.findAll());
         return this.ur.findAll();
     }
 }
