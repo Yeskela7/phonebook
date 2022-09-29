@@ -1,4 +1,4 @@
-package main.java.com.yeskela.phonebook;
+package com.yeskela.phonebook;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
